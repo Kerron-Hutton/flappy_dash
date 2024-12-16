@@ -11,8 +11,8 @@ class Dash extends PositionComponent {
           anchor: Anchor.center,
         );
 
-  final Vector2 _jumpForce = Vector2(0, -400);
-  final Vector2 _gravity = Vector2(0, 900);
+  final Vector2 _jumpForce = Vector2(0, -550);
+  final Vector2 _gravity = Vector2(0, 1500);
 
   Vector2 _velocity = Vector2.zero();
 
