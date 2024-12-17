@@ -14,7 +14,8 @@ const distanceFromPipes = 400.0;
 const numOfPipesInLoop = 5;
 const pipeGap = 600.0;
 
-class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
+class FlappyDashGame extends FlameGame<FlappyDashWorld>
+    with KeyboardEvents, HasCollisionDetection {
   FlappyDashGame()
       : super(
           world: FlappyDashWorld(),
@@ -41,14 +42,24 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents {
   }
 }
 
-class FlappyDashWorld extends World with TapCallbacks {
+class FlappyDashWorld extends World
+    with TapCallbacks, HasGameRef<FlappyDashGame> {
+  late TextComponent _scoreComponent;
   late PipePair _lastPipePair;
   late Dash _player;
+
+  int _score = 0;
 
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
+    _scoreComponent = TextComponent(
+      position: Vector2(0 + 10, -(game.size.y / 2)),
+      text: _score.toString(),
+    );
+
+    game.camera.viewfinder.add(_scoreComponent);
     _player = Dash();
 
     add(ParallaxBackground());
@@ -66,14 +77,12 @@ class FlappyDashWorld extends World with TapCallbacks {
   void update(double dt) {
     super.update(dt);
 
+    _scoreComponent.text = _score.toString();
+
     if (_player.x >= _lastPipePair.x) {
       _generatePipes(fromX: distanceFromPipes);
       _removeFirstXPipes(numOfPipesInLoop);
     }
-  }
-
-  void onSpacebarTap() {
-    _player.jump();
   }
 
   void _generatePipes({double fromX = 350}) {
@@ -93,5 +102,13 @@ class FlappyDashWorld extends World with TapCallbacks {
     final shouldBeRemoved = max(pipes.length - xPipesToRemove, 0);
 
     pipes.take(shouldBeRemoved).forEach((pipe) => pipe.removeFromParent());
+  }
+
+  void increaseScore() {
+    _score++;
+  }
+
+  void onSpacebarTap() {
+    _player.jump();
   }
 }

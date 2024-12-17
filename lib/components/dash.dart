@@ -1,9 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flappy_dash/components/hidden_coin.dart';
+import 'package:flappy_dash/components/pipe.dart';
+import 'package:flappy_dash/flappy_dash_game.dart';
+import 'package:logger/web.dart';
 
-class Dash extends PositionComponent {
+class Dash extends PositionComponent
+    with CollisionCallbacks, HasGameRef<FlappyDashGame> {
   Dash()
       : super(
           position: Vector2(0, 0),
@@ -23,6 +29,7 @@ class Dash extends PositionComponent {
     await super.onLoad();
 
     _dashSprite = await Sprite.load('dash.png');
+    _addHitBox();
   }
 
   @override
@@ -40,7 +47,29 @@ class Dash extends PositionComponent {
     position += _velocity * dt;
   }
 
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+
+    if (other is HiddenCoin) {
+      other.removeFromParent();
+      game.world.increaseScore();
+    } else if (other is Pipe) {
+      Logger().e('GAME OVER!!!!....');
+    }
+  }
+
   void jump() {
     _velocity = _jumpForce;
+  }
+
+  void _addHitBox() {
+    final dashRadius = size.x / 2;
+
+    add(CircleHitbox(
+      position: size / 2 * 1.1,
+      radius: dashRadius * 0.8,
+      anchor: Anchor.center,
+    ));
   }
 }
