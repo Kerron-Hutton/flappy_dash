@@ -11,7 +11,6 @@ import 'pipe_pair.dart';
 
 class FlappyDashRootComponent extends Component
     with FlameBlocReader<GameCubit, GameState>, HasGameRef<FlappyDashGame> {
-  late TextComponent _scoreComponent;
   late PipePair _lastPipePair;
   late Dash _player;
 
@@ -19,11 +18,6 @@ class FlappyDashRootComponent extends Component
   Future<void> onLoad() async {
     await super.onLoad();
 
-    _scoreComponent = TextComponent(
-      position: Vector2(0 + 10, -(game.size.y / 2)),
-    );
-
-    game.camera.viewfinder.add(_scoreComponent);
     _player = Dash();
 
     add(ParallaxBackground());
@@ -34,8 +28,6 @@ class FlappyDashRootComponent extends Component
   @override
   void update(double dt) {
     super.update(dt);
-
-    _scoreComponent.text = bloc.state.currScore.toString();
 
     if (_player.x >= _lastPipePair.x) {
       _generatePipes(fromX: distanceFromPipes);
@@ -63,7 +55,7 @@ class FlappyDashRootComponent extends Component
   }
 
   void triggerJumpAction() {
-    if (bloc.state.currPlayingState == PlayingState.none) {
+    if (bloc.state.currPlayingState.isIdle) {
       bloc.startPlaying();
     }
     _player.jump();

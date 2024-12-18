@@ -29,7 +29,7 @@ class PipePair extends PositionComponent
   void update(double dt) {
     super.update(dt);
 
-    if (bloc.state.currPlayingState == PlayingState.playing) {
+    if (bloc.state.currPlayingState.isPlaying) {
       position.x -= _speed * dt;
     }
   }

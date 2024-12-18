@@ -19,10 +19,10 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld>
   FlappyDashGame({required GameCubit this.gameCubit})
       : super(
           world: FlappyDashWorld(),
-          camera: CameraComponent.withFixedResolution(
-            height: 1000,
-            width: 600,
-          ),
+          // camera: CameraComponent.withFixedResolution(
+          //   height: 1000,
+          //   width: 600,
+          // ),
         );
 
   final GameCubit gameCubit;

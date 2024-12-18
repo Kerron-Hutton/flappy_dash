@@ -8,7 +8,6 @@ import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/components/hidden_coin.dart';
 import 'package:flappy_dash/components/pipe.dart';
 import 'package:flappy_dash/flappy_dash_game.dart';
-import 'package:logger/web.dart';
 
 class Dash extends PositionComponent
     with
@@ -18,7 +17,7 @@ class Dash extends PositionComponent
   Dash()
       : super(
           position: Vector2(0, 0),
-          size: Vector2.all(80),
+          size: Vector2.all(60),
           anchor: Anchor.center,
         );
 
@@ -48,7 +47,7 @@ class Dash extends PositionComponent
   void update(double dt) {
     super.update(dt);
 
-    if (bloc.state.currPlayingState != PlayingState.playing) {
+    if (bloc.state.currPlayingState.isNotPlaying) {
       return;
     }
 
@@ -60,7 +59,7 @@ class Dash extends PositionComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
 
-    if (bloc.state.currPlayingState != PlayingState.playing) {
+    if (bloc.state.currPlayingState.isNotPlaying) {
       return;
     }
 
@@ -73,7 +72,7 @@ class Dash extends PositionComponent
   }
 
   void jump() {
-    if (bloc.state.currPlayingState != PlayingState.playing) {
+    if (bloc.state.currPlayingState.isNotPlaying) {
       return;
     }
 

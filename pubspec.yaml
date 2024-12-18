@@ -13,7 +13,9 @@ dependencies:
   flame_bloc: ^1.12.4
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.2
   flutter_bloc: ^8.1.6
+  google_fonts: ^6.2.1
   logger: ^2.5.0
 
 dev_dependencies:
