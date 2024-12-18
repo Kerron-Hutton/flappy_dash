@@ -4,7 +4,9 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flappy_dash/audio_helper.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,13 +19,7 @@ const pipeGap = 600.0;
 class FlappyDashGame extends FlameGame<FlappyDashWorld>
     with KeyboardEvents, HasCollisionDetection {
   FlappyDashGame({required GameCubit this.gameCubit})
-      : super(
-          world: FlappyDashWorld(),
-          // camera: CameraComponent.withFixedResolution(
-          //   height: 1000,
-          //   width: 600,
-          // ),
-        );
+      : super(world: FlappyDashWorld());
 
   final GameCubit gameCubit;
 
@@ -51,6 +47,8 @@ class FlappyDashWorld extends World
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
+
+    await getIt.get<AudioHelper>().initialize();
 
     add(FlameBlocProvider<GameCubit, GameState>(
       create: () => game.gameCubit,

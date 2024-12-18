@@ -53,6 +53,10 @@ class Dash extends PositionComponent
 
     _velocity += _gravity * dt;
     position += _velocity * dt;
+
+    if (position.y >= game.size.y) {
+      bloc.gameOver();
+    }
   }
 
   @override

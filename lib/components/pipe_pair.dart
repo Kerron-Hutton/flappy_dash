@@ -20,7 +20,7 @@ class PipePair extends PositionComponent
 
     addAll([
       Pipe(isFlipped: true, position: Vector2(0, -_gap / 2)),
-      HiddenCoin(position: Vector2(30, 0)),
+      HiddenCoin(position: Vector2(50, 0)),
       Pipe(isFlipped: false, position: Vector2(0, _gap / 2)),
     ]);
   }
