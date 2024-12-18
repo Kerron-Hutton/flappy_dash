@@ -5,7 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flappy_dash/audio_helper.dart';
-import 'package:flappy_dash/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/presentation/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +19,10 @@ const pipeGap = 600.0;
 class FlappyDashGame extends FlameGame<FlappyDashWorld>
     with KeyboardEvents, HasCollisionDetection {
   FlappyDashGame({required GameCubit this.gameCubit})
-      : super(world: FlappyDashWorld());
+      : super(
+          world: FlappyDashWorld(),
+          // camera: CameraComponent.withFixedResolution(width: 600, height: 1000),
+        );
 
   final GameCubit gameCubit;
 

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flappy_dash/bloc/game/game_cubit.dart';
-import 'package:flappy_dash/components/hidden_coin.dart';
-import 'package:flappy_dash/components/pipe.dart';
+import 'package:flappy_dash/presentation/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/presentation/components/hidden_coin.dart';
+import 'package:flappy_dash/presentation/components/pipe.dart';
 
 class PipePair extends PositionComponent
     with FlameBlocReader<GameCubit, GameState> {

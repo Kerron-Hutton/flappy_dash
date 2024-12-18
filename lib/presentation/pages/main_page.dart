@@ -1,12 +1,13 @@
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flappy_dash/bloc/game/game_cubit.dart';
-import 'package:flappy_dash/flappy_dash_game.dart';
+import 'package:flappy_dash/presentation/bloc/game/game_cubit.dart';
+import 'package:flappy_dash/presentation/flappy_dash_game.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'widgets/game_over.dart';
-import 'widgets/tap_to_play.dart';
+import '../widgets/game_over.dart';
+import '../widgets/tap_to_play.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -49,7 +50,9 @@ class _MainPageState extends State<MainPage> {
             child: Stack(
               children: [
                 GameWidget(
-                  game: _flappyDashGame,
+                  game: kDebugMode
+                      ? FlappyDashGame(gameCubit: _gameCubit)
+                      : _flappyDashGame,
                 ),
                 if (state.currPlayingState.isGameOver) const GameOver(),
                 if (state.currPlayingState.isIdle) const TapToPlay(),
