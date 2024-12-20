@@ -19,7 +19,7 @@
       "name": "flappy_dash (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "release",
     }
   ]
 }

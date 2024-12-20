@@ -1,12 +1,15 @@
 import 'package:flame/game.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flappy_dash/presentation/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flappy_dash/presentation/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/presentation/flappy_dash_game.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../dialogs/app_dialogs.dart';
+import '../widgets/best_score_overlay.dart';
+import '../widgets/final_score.dart';
 import '../widgets/game_over.dart';
+import '../widgets/profile_overlay.dart';
 import '../widgets/tap_to_play.dart';
 
 class MainPage extends StatefulWidget {
@@ -50,27 +53,30 @@ class _MainPageState extends State<MainPage> {
             child: Stack(
               children: [
                 GameWidget(
-                  game: kDebugMode
-                      ? FlappyDashGame(gameCubit: _gameCubit)
-                      : _flappyDashGame,
+                  game: _flappyDashGame,
+                  backgroundBuilder: (context) {
+                    return Container(
+                      color: AppColors.backgroundColor,
+                    );
+                  },
                 ),
                 if (state.currPlayingState.isGameOver) const GameOver(),
                 if (state.currPlayingState.isIdle) const TapToPlay(),
-                if (state.currPlayingState.isNotGameOver)
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 56),
-                      child: Text(
-                        '${state.currScore}',
-                        style: GoogleFonts.chewy(
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                          fontSize: 38,
-                        ),
+                if (state.currPlayingState.isNotGameOver) const FinalScore(),
+                Positioned(
+                  top: 58,
+                  right: 16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const ProfileOverlay(),
+                      const SizedBox(height: 8),
+                      BestScoreOverlay(
+                        onTap: () => AppDialogs.showLeaderboard(context),
                       ),
-                    ),
-                  )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

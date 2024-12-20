@@ -18,10 +18,10 @@ const pipeGap = 600.0;
 
 class FlappyDashGame extends FlameGame<FlappyDashWorld>
     with KeyboardEvents, HasCollisionDetection {
-  FlappyDashGame({required GameCubit this.gameCubit})
+  FlappyDashGame({required this.gameCubit})
       : super(
-          world: FlappyDashWorld(),
           // camera: CameraComponent.withFixedResolution(width: 600, height: 1000),
+          world: FlappyDashWorld(),
         );
 
   final GameCubit gameCubit;
